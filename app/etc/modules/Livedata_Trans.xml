@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <Livedata_Trans>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Livedata_Trans>
+    </modules>
+</config>

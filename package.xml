@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
     <name>Livedata_Solutions</name>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <stability>stable</stability>
     <license uri="http://opensource.org/licenses/osl-3.0.php">Open Software License</license>
     <channel>community</channel>
@@ -11,8 +11,8 @@
     <notes>Syncronization and SMTP transactionals</notes>
     <authors><author><name>Toni</name><user>Toni</user><email>tcarreno@livedata-solutions.com</email></author></authors>
     <date>2016-08-04</date>
-    <time>14:54:09</time>
-    <contents><target name="mageetc"><dir name="."><dir name="app"><dir name="etc"><dir name="modules"><file name="Livedata_Trans.xml" hash=""/></dir></dir></dir></dir></target></contents>
+    <time>15:39:43</time>
+    <contents><target name="magecommunity"><dir name="Livedata"><file name="README.txt" hash="4a13fca9b721970cedb5a70de913f6f6"/><dir name="Trans"><dir name="Helper"><file name="Contact.php" hash="2c89ccc9aa67c629dabe3e65471d8544"/><file name="Contactlist.php" hash="dd614e048cdb909f903dadfa661f166b"/></dir><dir name="Model"><file name="Observer.php" hash="8b944f9ce05d4387885d25d89d18c2c1"/><dir name="System"><dir name="Config"><dir name="Source"><file name="Contactlists.php" hash="246ecc00a9381e3468062ec4b10c6584"/></dir></dir></dir></dir><dir name="etc"><file name="adminhtml.xml" hash="86910cfba6392ca627a6cf23938a87b7"/><file name="config.xml" hash="ffd0664ef4aa93904c6ab5f04bbcb67d"/><file name="system.xml" hash="4ab9449263fedec4b2ebd8cdbf8116d6"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Livedata_Trans.xml" hash="513a947383ede06a9fa880a3bcacebf7"/></dir></target></contents>
     <compatible/>
-    <dependencies><required><php><min>5.0.0</min><max>6.0.0</max></php><package><name>Aschroder_ SMTPPro</name><channel>local</channel><min>1.6</min><max>1.9.2</max><files><file target="." path="app/etc/modules/Aschroder_SMTPPro.xml"/></files></package></required></dependencies>
+    <dependencies><required><php><min>5.0.0</min><max>6.0.0</max></php><package><name>Aschroder_ SMTPPro</name><channel>local</channel><min>1.6</min><max>1.9.2</max><files><file target="." path="app/etc/modules/Aschroder_SMTPPro.xml  "/></files></package></required></dependencies>
 </package>

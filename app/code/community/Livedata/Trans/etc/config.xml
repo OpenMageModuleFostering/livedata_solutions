@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <Livedata_Trans>
+            <version>1.0.0.0.1</version>
+        </Livedata_Trans>
+    </modules>
+    <global>
+        <!-- models sections -->
+        <models>
+            <livedata_trans>
+                <class>Livedata_Trans_Model</class>
+                <resourceModel>news_resource</resourceModel>
+            </livedata_trans>
+        </models>
+        <!-- end models sections -->
+        <helpers>
+            <livedata_trans>
+                <class>Livedata_Trans_Helper</class>
+            </livedata_trans>
+        </helpers>
+        <!-- event to change config -->
+        <events>
+            <admin_system_config_changed_section_trans>
+                <observers>
+                    <livedata_trans>
+                        <type>singleton</type>
+                        <class>livedata_trans/observer</class>
+                        <method>adminSystemConfigChangedSection</method>
+                    </livedata_trans>
+                </observers>
+            </admin_system_config_changed_section_trans>
+            <customer_save_after>
+                <observers>
+                    <livedata_trans>
+                        <type>singleton</type>
+                        <class>livedata_trans/observer</class>
+                        <method>addRegisterToDB</method>
+                    </livedata_trans>
+                </observers>
+            </customer_save_after>
+            <newsletter_subscriber_save_commit_after>
+                <observers>
+                    <livedata_trans>
+                        <type>singleton</type>
+                        <class>livedata_trans/observer</class>
+                        <method>subscribedToNewsletter</method>
+                    </livedata_trans>
+                </observers>
+            </newsletter_subscriber_save_commit_after>
+            <customer_delete_before>
+                <observers>
+                    <livedata_trans>
+                        <type>singleton</type>
+                        <class>livedata_trans/observer</class>
+                        <method>onCustomerDelete</method>
+                    </livedata_trans >
+                </observers>
+            </customer_delete_before>
+            <sales_order_payment_pay>
+                <observers>
+                    <livedata_trans>
+                        <type>singleton</type>
+                        <class>livedata_trans/observer</class>
+                        <method>onPayOrder</method>
+                    </livedata_trans >
+                </observers>
+            </sales_order_payment_pay>
+        </events>
+    </global>
+    <default>
+        <trans>
+            <view>
+                <sendtrans>0</sendtrans>
+                <enabled>0</enabled>
+            </view>
+        </trans>
+    </default>
+</config>
