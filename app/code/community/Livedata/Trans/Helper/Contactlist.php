@@ -54,29 +54,35 @@ class Livedata_Trans_Helper_Contactlist extends Mage_Core_Helper_Abstract
         $contact      = Mage::getSingleton('admin/session')->getUser()->getEmail();
         $fieldsString = '';
         $httpMethod   = 'PUT';
-        $result       = array('code' => 400, 'message' => 'Some mandatory parameters are not defined');
+        $result       = array('statusCode' => 400, 'message' => 'Some mandatory parameters are not defined');
         // check that all the fields are not empty
         if(!empty($environment) && !empty($baseId) && !empty($username) && !empty($password)) {
-            $ch      = curl_init();
-            $headers = $this->generateWSSEHeader($username, $password);
-            curl_setopt($ch, CURLOPT_URL, $environment.$baseId.'/contact_lists');
-            $fields = array('name'        => urlencode($listName),
-                            'description' => urlencode($username.' created this list from Magento'),
-                            'emaillist'   => urlencode($contact),
-                            'batList'     => urlencode('false')
-                            );
-            foreach($fields as $key=>$value) { $fieldsString .= $key.'='.$value.'&'; }
-            rtrim($fieldsString, '&');
+            // check if the user is loaded in our database
+            $existContact = Mage::helper('livedata_trans/contact')->checkContact($contact);
+            if($existContact['statusCode'] == 200) {
+                // if exist create the list
+                $ch      = curl_init();
+                $headers = $this->generateWSSEHeader($username, $password);
+                curl_setopt($ch, CURLOPT_URL, $environment.$baseId.'/contact_lists');
+                $fields = array('name'        => urlencode($listName),
+                                'description' => urlencode($username.' created this list from Magento'),
+                                'emaillist'   => urlencode($contact),
+                                'batList'     => urlencode('false')
+                                );
+                foreach($fields as $key=>$value) { $fieldsString .= $key.'='.$value.'&'; }
+                rtrim($fieldsString, '&');
 
-            curl_setopt($ch, CURLOPT_POST, count($fields));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $httpMethod);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $fieldsString);
+                curl_setopt($ch, CURLOPT_POST, count($fields));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $httpMethod);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $fieldsString);
 
-            $response = curl_exec($ch);
-            curl_close($ch);
-            $result   = json_decode($response, true);
+                $response = curl_exec($ch);
+                curl_close($ch);
+                $result   = json_decode($response, true);
+            } else 
+                $result   = array('statusCode' => 400, 'message' => 'Your email is not saved in our database. Please, add your contact in your LiveData base.');
         }
 
         return $result;

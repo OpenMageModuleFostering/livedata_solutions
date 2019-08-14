@@ -8,9 +8,16 @@ etc/modules
 Install the smtp pluggin from:
 https://www.magentocommerce.com/magento-connect/smtp-pro-email-free-custom-smtp-email.html
 "http://connect20.magentocommerce.com/community/ASchroder_SMTPPro"
-SMTP config:
 
+Edit crontab:
+contrab -e
+Linux:
+10 9 * * * /{{url to project}}/cron.sh
+13 9 * * * /{{url to project}}/cron.sh
+windows:
+10 9 * * * /{{url to project}}/cron.php      //10 9 * * * /var/www/magento/cron.sh
+13 9 * * * /{{url to project}}/cron.php
 
-chmod 775 
+chmod 775 in all Livedata project
 
 clear chache

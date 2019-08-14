@@ -241,7 +241,7 @@ class Livedata_Trans_Model_Observer
      */
     private function getCustomerAddress($email)
     {
-        $contactAddress = Mage::getResourceModel('customer/address_collection')->addAttributeToSelect('*')->joinTable(array('customer'=>'customer/entity'),'entity_id = parent_id',array('*'));
+        $contactAddress = Mage::getResourceModel('customer/address_collection')->addAttributeToSelect('*')->joinTable(array('customer'=>'customer/entity'),'entity_id = parent_id',array('email'));
         $postcode       = "";
         foreach ($contactAddress as $address) {
             $addressData = $address->getData();
@@ -358,5 +358,44 @@ class Livedata_Trans_Model_Observer
         $contact = Mage::helper('livedata_trans/contact')->updateMagentoPaymentAttr($email, $import);
         if($contact['statusCode'] != 200)
             Mage::getSingleton('core/session')->addError('Livedata attributes has not been updated: ' . $contact['message'] . ' Please contact with Livedata support team.');
+    }
+
+    /**
+     * event to add registers in scenario program
+     *
+     */
+    public function addRegisterToScenario(Varien_Event_Observer $observer)
+    {
+        // get the post data
+        $request      = $observer->getEvent();
+        $customerData = $request->getCustomer();
+        // add contact to database
+        $contact = Mage::helper('livedata_trans/scenario')->addContactToProgram($customerData);
+        if($contact['statusCode'] != 201)
+            Mage::getSingleton('core/session')->addNotice('An error ocurred while inserting the contact in scenario program: ' . $contact['message']);
+    }
+
+    /**
+     * cron that check the unsubscribe contacts in livedata every day and update it in magento database
+     *
+     */
+    public function livedatatransunsubscribe()
+    {
+        $environment  = Mage::getStoreConfig('trans/view/api_url');
+        $baseId       = Mage::getStoreConfig('trans/view/api_key');
+        $username     = Mage::getStoreConfig('trans/view/from_user');
+        $password     = Mage::getStoreConfig('trans/view/from_password');
+        // get the unsubscribes in last day
+        $date         = date('Y-m-j');
+        $yesterday    = strtotime ( '-1 day' , strtotime ( $date ) ) ;
+        $fromDate     = date ( 'Y-m-j' , $yesterday ).'+00:00:00';
+        $toDate       = date ( 'Y-m-j' , $yesterday ).'+23:59:59';
+        $contacts     = Mage::helper('livedata_trans/contact')->getLastDayUnsubscribes($fromDate, $toDate);
+        if(!empty($contacts['result']['data'])) {
+            foreach ($contacts['result']['data'] as $contact) {
+                // mark the contact as not subscriber
+                $subscriber = Mage::getModel('newsletter/subscriber')->loadByEmail($contact['email'])->unsubscribe();
+            }
+        } 
     }
 }

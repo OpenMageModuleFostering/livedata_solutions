@@ -40,15 +40,7 @@ class Livedata_Trans_Helper_Contact extends Mage_Core_Helper_Abstract
             else
                 $birthdate = "";
             // check if it's a new contact or updated
-            $ch           = curl_init();
-            $httpMethod   = 'GET';
-            curl_setopt($ch, CURLOPT_URL, $environment.$baseId.'/contacts/'.$contact->getEmail());
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers); 
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $httpMethod);
-            $response     = curl_exec($ch);
-            curl_close($ch);
-            $getContact   = json_decode($response, true);
+            $getContact  = $this->checkContact($contact->getEmail());
             // initializace custom attributes
             if($getContact['statusCode'] == 200) {
                 // updated contact
@@ -292,5 +284,58 @@ class Livedata_Trans_Helper_Contact extends Mage_Core_Helper_Abstract
                 $total = $totalimport;
         }
         return $total;
+    }
+
+    /**
+     * function check if contact exist in our database
+     *
+     * @param  $email
+     * @return array
+     */
+    public function checkContact($email)
+    {
+        $environment  = Mage::getStoreConfig('trans/view/api_url');
+        $baseId       = Mage::getStoreConfig('trans/view/api_key');
+        $username     = Mage::getStoreConfig('trans/view/from_user');
+        $password     = Mage::getStoreConfig('trans/view/from_password');
+        $httpMethod   = 'GET';
+        $headers      = $this->generateWSSEHeader($username, $password);
+        $ch           = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $environment.$baseId.'/contacts/'.$email);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers); 
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $httpMethod);
+        $response     = curl_exec($ch);
+        curl_close($ch);
+        $res          = json_decode($response, true);
+
+        return $res;
+    }
+
+    /**
+     * function get all livedata unsubscribe contacts from last day
+     *
+     * @param  string   $fromDate
+     * @param  string   $toDate
+     * @return array
+     */
+    public function getLastDayUnsubscribes($fromDate, $toDate)
+    {
+        $environment  = Mage::getStoreConfig('trans/view/api_url');
+        $baseId       = Mage::getStoreConfig('trans/view/api_key');
+        $username     = Mage::getStoreConfig('trans/view/from_user');
+        $password     = Mage::getStoreConfig('trans/view/from_password');
+        $httpMethod   = 'GET';
+        $headers      = $this->generateWSSEHeader($username, $password);
+        $ch           = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $environment.$baseId.'/unsubscribes?fromDate='.$fromDate.'&toDate='.$toDate);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers); 
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $httpMethod);
+        $response     = curl_exec($ch);
+        curl_close($ch);
+        $res          = json_decode($response, true);
+
+        return $res;
     }
 }

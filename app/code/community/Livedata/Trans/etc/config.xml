@@ -6,6 +6,28 @@
             <version>1.0.0.0.1</version>
         </Livedata_Trans>
     </modules>
+    <crontab>
+        <jobs>
+            <livedata_trans>
+                <schedule>
+                    <cron_expr>10 9 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>livedata_trans/observer::livedatatransunsubscribe</model>
+                </run>
+            </livedata_trans>
+        </jobs>
+        <jobs>
+            <livedata_trans>
+                <schedule>
+                    <cron_expr>13 9 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>livedata_trans/observer::livedatatransunsubscribe</model>
+                </run>
+            </livedata_trans>
+        </jobs>
+    </crontab>
     <global>
         <!-- models sections -->
         <models>
@@ -40,6 +62,24 @@
                     </livedata_trans>
                 </observers>
             </customer_save_after>
+            <customer_register_success>
+                <observers>
+                    <livedata_trans>
+                        <type>singleton</type>
+                        <class>livedata_trans/observer</class>
+                        <method>addRegisterToScenario</method>
+                    </livedata_trans>
+                </observers>
+            </customer_register_success>
+            <adminhtml_customer_save_after>
+                <observers>
+                    <livedata_trans>
+                        <type>singleton</type>
+                        <class>livedata_trans/observer</class>
+                        <method>addRegisterToScenario</method>
+                    </livedata_trans>
+                </observers>
+            </adminhtml_customer_save_after>
             <newsletter_subscriber_save_commit_after>
                 <observers>
                     <livedata_trans>

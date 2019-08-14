@@ -3,7 +3,7 @@
     "type": "magento-module",
     "license": "Open-Software-License",
     "homepage": "",
-    "description": "Livedata Solutions extension allow you to syncronize your contacts with our database and send transactionals messages.",
+    "description": "Allow you to synchronize your magento contacts with our database and send transactional messages.",
     "authors": [
     {
         "name": "Toni",
