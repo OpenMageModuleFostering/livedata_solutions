@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>Livedata_Solutions</name>
+    <version>1.0.0</version>
+    <stability>stable</stability>
+    <license uri="http://opensource.org/licenses/osl-3.0.php">Open Software License</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Livedata Solutions extension allow you to syncronize your contacts with our database and send transactionals messages.</summary>
+    <description>Live Data is a cloud based emailing platform that enables client engagement by one to one campaigns, scenario automation and customer retention. Intuitive and easy to employ, Live Data Emailing is the perfect tool for email marketers who don&#x2019;t want to spend their time reading user manuals. Whether you&#x2019;re a content editor, online store or a traditional retailer, Live Data Platform has been created to satisfy your needs.Live Data Emailing enables you to build and manage customer lifecycles and deliver context driven messages. It takes into account your clients&#x2019; behavior and device preferences, for a targeted and personalized dialogue.Access your campaign manager directly on our online interface our plug our API to your system. A specialized consultant will help you set up your account and accompany you on a daily basis to get the best out of your email marketing experience.</description>
+    <notes>Syncronization and SMTP transactionals</notes>
+    <authors><author><name>Toni</name><user>Toni</user><email>tcarreno@livedata-solutions.com</email></author></authors>
+    <date>2016-08-04</date>
+    <time>14:54:09</time>
+    <contents><target name="mageetc"><dir name="."><dir name="app"><dir name="etc"><dir name="modules"><file name="Livedata_Trans.xml" hash=""/></dir></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.0.0</min><max>6.0.0</max></php><package><name>Aschroder_ SMTPPro</name><channel>local</channel><min>1.6</min><max>1.9.2</max><files><file target="." path="app/etc/modules/Aschroder_SMTPPro.xml"/></files></package></required></dependencies>
+</package>

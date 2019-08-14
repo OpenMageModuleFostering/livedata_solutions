@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/Livedata_Solutions",
+    "type": "magento-module",
+    "license": "Open-Software-License",
+    "homepage": "",
+    "description": "Livedata Solutions extension allow you to syncronize your contacts with our database and send transactionals messages.",
+    "authors": [
+    {
+        "name": "Toni",
+        "email": "tcarreno@livedata-solutions.com"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}
