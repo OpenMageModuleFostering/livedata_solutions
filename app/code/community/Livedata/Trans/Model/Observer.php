@@ -34,43 +34,7 @@ class Livedata_Trans_Model_Observer
             // validate that the contact attributes are created
             if($customExist) {
                 // get the magento contacts
-                $contacts = $this->getCustomerContacts();
-                $updated  = true;
-                foreach ($contacts as $user) {
-                    $contactdb = $user->getData();
-                    // get only the active contacts
-                    if($contactdb['is_active'] == '1') {
-                        // get customer postcode
-                        $contactdb['postcode'] = $this->getCustomerAddress($contactdb['email']);
-                        // get cutomer grand total
-                        $customerAmount = $this->getCustomerGrandTotal($contactdb['email']);
-                        $contactdb['totalAmount'] = $customerAmount['total'];
-                        $contactdb['lastAmount']  = $customerAmount['last'];
-                        // sync contact: add/update contact with standard attr in database
-                        $contact = $this->addOrUpdateContact($contactdb);
-                        if($contact['code'] == 200 || $contact['code'] == 201) {
-                            // if the contact has been inserted or updated, and there is a contact list selected and allowed, insert it in the list
-                            $listId = Mage::getStoreConfig('trans/selectlist/from_list');
-                            if($listId != 0)
-                                Mage::helper('livedata_trans/contact')->insertContactToList($contactdb['email'], $listId);  
-                        } else
-                            $updated = false;
-                        // if it is a new contact, unsubscribe it if it is not subscribed in the newsletter
-                        if($contact['code'] == 201) {
-                            //unsubscribe contact
-                            $subscriber = Mage::getModel('newsletter/subscriber')->loadByEmail($contactdb['email']);
-                            if (array_key_exists('subscriber_status', $subscriber) && $subscriber['subscriber_status'] == 3) {
-                                $unsubscribeContact = Mage::helper('livedata_trans/contact')->unsubscribeContact($contactdb['email']);
-                                if($unsubscribeContact['statusCode'] != 200)
-                                    $updated = false;
-                            } elseif (!array_key_exists('subscriber_status', $subscriber)) {
-                                $unsubscribeContact = Mage::helper('livedata_trans/contact')->unsubscribeContact($contactdb['email']);
-                                if($unsubscribeContact['statusCode'] != 200)
-                                    $updated = false;
-                            }
-                        }
-                    }
-                }
+                $updated = $this->getCustomerContacts();
                 // if some contact has not been inserted or included in the list or unsubscribe it show a notice
                 if(!$updated)
                     Mage::getSingleton('core/session')->addNotice('Some contact has not been inserted correctly in the synchronization process');
@@ -229,9 +193,52 @@ class Livedata_Trans_Model_Observer
      */
     private function getCustomerContacts()
     {
-        $users = mage::getModel('customer/customer')->getCollection()->addAttributeToSelect('email')->addAttributeToSelect('firstname')->addAttributeToSelect('lastname')->addAttributeToSelect('prefix')->addAttributeToSelect('dob');
-        return $users;
+        $total   = mage::getModel('customer/customer')->getCollection()->getSize();
+        $pages   = ceil($total / 1000);
+        $contact = array();
+        $updated = true;
+        for($i = 1; $i <= $pages; $i++) {
+            $contacts = mage::getModel('customer/customer')->getCollection()->addAttributeToSelect('email')->addAttributeToSelect('firstname')->addAttributeToSelect('lastname')->addAttributeToSelect('prefix')->addAttributeToSelect('dob')->setPageSize(1000)->setCurPage($i);
+            foreach ($contacts as $contactdbfilter) {
+                $contactdb = $contactdbfilter->getData();
+                // get only the active contacts
+                if($contactdb['is_active'] == '1') {
+                    // get customer postcode
+                    $contactdb['postcode'] = $this->getCustomerAddress($contactdb['email']);
+                    // get cutomer grand total
+                    $customerAmount = $this->getCustomerGrandTotal($contactdb['email']);
+                    $contactdb['totalAmount'] = $customerAmount['total'];
+                    $contactdb['lastAmount']  = $customerAmount['last'];
+                    // sync contact: add/update contact with standard attr in database
+                    $contact = $this->addOrUpdateContact($contactdb);
+                    if($contact['code'] == 200 || $contact['code'] == 201) {
+                        // if the contact has been inserted or updated, and there is a contact list selected and allowed, insert it in the list
+                        $listId = Mage::getStoreConfig('trans/selectlist/from_list');
+                        if($listId != 0)
+                            Mage::helper('livedata_trans/contact')->insertContactToList($contactdb['email'], $listId);  
+                    } else
+                        $updated = false;
+                    // if it is a new contact, unsubscribe it if it is not subscribed in the newsletter
+                    if($contact['code'] == 201) {
+                        //unsubscribe contact
+                        $subscriber = Mage::getModel('newsletter/subscriber')->loadByEmail($contactdb['email']);
+                        if (array_key_exists('subscriber_status', $subscriber) && $subscriber['subscriber_status'] == 3) {
+                            $unsubscribeContact = Mage::helper('livedata_trans/contact')->unsubscribeContact($contactdb['email']);
+                            if($unsubscribeContact['statusCode'] != 200)
+                                $updated = false;
+                        } elseif (!array_key_exists('subscriber_status', $subscriber)) {
+                            $unsubscribeContact = Mage::helper('livedata_trans/contact')->unsubscribeContact($contactdb['email']);
+                            if($unsubscribeContact['statusCode'] != 200)
+                                $updated = false;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $updated;
     }
+
 
     /**
      * function to get the customer addresses by email

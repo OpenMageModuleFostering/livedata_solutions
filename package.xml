@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <package>
     <name>Livedata_Solutions</name>
-    <version>1.0.2</version>
+    <version>1.0.4</version>
     <stability>stable</stability>
     <license uri="http://opensource.org/licenses/osl-3.0.php">Open Software License</license>
     <channel>community</channel>
     <extends/>
     <summary>Allow you to synchronize your magento contacts with our database and send transactional messages.</summary>
     <description>Live Data is a cloud based emailing platform that enables client engagement by one to one campaigns, scenario automation and customer retention. Intuitive and easy to employ, Live Data Emailing is the perfect tool for email marketers who don&#x2019;t want to spend their time reading user manuals. Whether you&#x2019;re a content editor, online store or a traditional retailer, Live Data Platform has been created to satisfy your needs.Live Data Emailing enables you to build and manage customer lifecycles and deliver context driven messages. It takes into account your clients&#x2019; behavior and device preferences, for a targeted and personalized dialogue.Access your campaign manager directly on our online interface our plug our API to your system. A specialized consultant will help you set up your account and accompany you on a daily basis to get the best out of your email marketing experience.</description>
-    <notes>Scenario manager programs and Livedata unsubscribed synchronization </notes>
+    <notes>update code when get contacts from magento database quey. Foreach every 1000 contacts</notes>
     <authors><author><name>Toni</name><user>Toni</user><email>tcarreno@livedata-solutions.com</email></author></authors>
-    <date>2016-08-31</date>
-    <time>08:34:24</time>
-    <contents><target name="magecommunity"><dir name="Livedata"><file name="README.txt" hash="ceb13527ad00b32bd4e76ba057421ba9"/><dir name="Trans"><dir name="Helper"><file name="Contact.php" hash="f7eddee0fa61fb197d4a90d813a4b579"/><file name="Contactlist.php" hash="e288ff740871f4d21c9781f730959417"/><file name="Scenario.php" hash="5ddd91cfbb70afbcb57f2084bb1e80e3"/></dir><dir name="Model"><file name="Observer.php" hash="a837907bf1eb33d4483d212e47fc7820"/><dir name="System"><dir name="Config"><dir name="Source"><file name="Contactlists.php" hash="246ecc00a9381e3468062ec4b10c6584"/><file name="Scenariolist.php" hash="e0c99ca7ac545b18fc5b5540867ea6b8"/></dir></dir></dir></dir><dir name="etc"><file name="adminhtml.xml" hash="86910cfba6392ca627a6cf23938a87b7"/><file name="config.xml" hash="449970d062bd6d57be6edad8f8f22b8a"/><file name="system.xml" hash="fa1976f9423e26e29a42bf155876703f"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Livedata_Trans.xml" hash="513a947383ede06a9fa880a3bcacebf7"/></dir></target></contents>
+    <date>2016-09-20</date>
+    <time>14:20:55</time>
+    <contents><target name="magecommunity"><dir name="Livedata"><file name="README.txt" hash="ceb13527ad00b32bd4e76ba057421ba9"/><dir name="Trans"><dir name="Helper"><file name="Contact.php" hash="f7eddee0fa61fb197d4a90d813a4b579"/><file name="Contactlist.php" hash="e288ff740871f4d21c9781f730959417"/><file name="Scenario.php" hash="5ddd91cfbb70afbcb57f2084bb1e80e3"/></dir><dir name="Model"><file name="Observer.php" hash="70cede658f89324972e6d3cb9b0ff367"/><dir name="System"><dir name="Config"><dir name="Source"><file name="Contactlists.php" hash="246ecc00a9381e3468062ec4b10c6584"/><file name="Scenariolist.php" hash="e0c99ca7ac545b18fc5b5540867ea6b8"/></dir></dir></dir></dir><dir name="etc"><file name="adminhtml.xml" hash="86910cfba6392ca627a6cf23938a87b7"/><file name="config.xml" hash="449970d062bd6d57be6edad8f8f22b8a"/><file name="system.xml" hash="fa1976f9423e26e29a42bf155876703f"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Livedata_Trans.xml" hash="513a947383ede06a9fa880a3bcacebf7"/></dir></target></contents>
     <compatible/>
-    <dependencies><required><php><min>5.0.0</min><max>6.0.0</max></php><package><name>Aschroder_ SMTPPro</name><channel>local</channel><min>1.6</min><max>1.9.2</max><files><file target="." path="app/etc/modules/Aschroder_SMTPPro.xml     "/></files></package></required></dependencies>
+    <dependencies><required><php><min>5.0.0</min><max>6.0.0</max></php><package><name>Aschroder_ SMTPPro</name><channel>local</channel><min>1.6</min><max>1.9.2</max><files><file target="." path="app/etc/modules/Aschroder_SMTPPro.xml         "/></files></package></required></dependencies>
 </package>
