@@ -1,7 +1,7 @@
 {
-    "name": "OpenMageModuleFostering\/Livedata_Solutions",
+    "name": "openmage-module-fostering\/livedata_solutions",
     "type": "magento-module",
-    "license": "Open-Software-License",
+    "license": "OSL-3.0",
     "homepage": "",
     "description": "Allow you to synchronize your magento contacts with our database and send transactional messages.",
     "authors": [
