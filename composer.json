@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/Livedata_Solutions",
+    "name": "OpenMageModuleFostering\/Livedata_Solutions",
     "type": "magento-module",
     "license": "Open-Software-License",
     "homepage": "",
     "description": "Allow you to synchronize your magento contacts with our database and send transactional messages.",
     "authors": [
-    {
-        "name": "Toni",
-        "email": "tcarreno@livedata-solutions.com"
-    }
-],
+        {
+            "name": "Toni",
+            "email": "tcarreno@livedata-solutions.com"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
